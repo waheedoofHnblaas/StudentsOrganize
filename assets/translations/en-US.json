@@ -1,0 +1,61 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+  "lang": "عربي",
+  "phone": "phone",
+  "connectionError": "Internet Connection Error",
+  "name": "name",
+  "hour": "Hour",
+  "min": "Minute",
+  "dates": "Dates",
+  "refresh": "refresh",
+  "language": "Change Language",
+  "login": "Login",
+  "wait": "wait",
+  "user_type": "User Type",
+  "mark": "Mark",
+  "exam_mark": "Exam Mark",
+  "new_lesson": "New Lesson",
+  "no_comment": "No Comment",
+  "no_marks": "No Marks",
+  "add": "Add",
+  "delete": "Delete",
+  "ok": "Sure",
+  "successful": "Successful",
+  "add_student": "Add Student",
+  "late": "Late",
+  "date_date": "Date Data",
+  "student": "Student",
+  "teacher": "Teacher",
+  "password": "password",
+  "login_student": "Student Login",
+  "login_teacher": "Teacher Login",
+  "no_lessons": "No Lessons Yet",
+  "add_date": "Add Date",
+  "add_lesson": "Add Lesson To ",
+  "add_note": "Add Note",
+  "no_students": "No Students Yet",
+  "no_dates": "No Dates Yet",
+  "note": "Note",
+  "choose_student": "Choose Lesson Students",
+  "lesson": "Lesson",
+  "change_lang": "تغيير اللغة",
+  "day": "Day",
+  "time": "Time",
+  "period": "Period",
+  "logout": "logout"
+}

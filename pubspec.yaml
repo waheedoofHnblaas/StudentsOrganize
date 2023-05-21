@@ -1,0 +1,60 @@
+name: students
+description: A new Flutter project by waheed hanblaas
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.4 <3.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+  get: ^4.6.5
+  device_preview: ^1.1.0  #^0.7.5
+  dartz: ^0.10.1
+  shared_preferences: ^2.0.15
+  cached_network_image: ^3.2.0
+  http: ^0.13.4
+  device_apps: ^2.2.0
+  url_launcher: ^6.1.10
+  share_plus: ^6.3.4
+  easy_localization: ^3.0.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+
+
+  uses-material-design: true
+
+  assets:
+    - assets/translations/ar-DZ.json
+    - assets/translations/en-US.json
+    - assets/images/
+
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo-Bold.ttf
+          weight: 700
+    - family: Combo
+      fonts:
+        - asset: assets/fonts/Combo-Regular.ttf
+          weight: 700
+
+
