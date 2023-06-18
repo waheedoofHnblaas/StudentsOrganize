@@ -1,9 +1,11 @@
+import 'dart:convert';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:students/core/class/statusrequest.dart';
 import 'package:students/core/constant/approutes.dart';
-import 'package:students/core/function/validinput.dart';
 import 'package:students/data/model/teacher_model.dart';
 
 import '../../../core/function/handlingdata.dart';
@@ -38,22 +40,15 @@ class TeacherLoginController extends GetxController {
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == 'success') {
           teacherModel = TeacherModel.fromJson(response['data']);
-          myServices.sharedPreferences.setStringList(
-            'teacherModel',
-            [
-              teacherModel.teacherId.toString(),
-              teacherModel.teacherName.toString(),
-              password.text,
-              teacherModel.teacherCreate.toString(),
-              teacherModel.subjectId.toString(),
-              teacherModel.teacherPhone.toString(),
-            ],
-          );
+          teacherModel.teacherPassword=password.text;
+          String jsonString = jsonEncode(teacherModel.toJson());
+          await myServices.sharedPreferences
+              .setString('teacherModel', jsonString);
           myServices.sharedPreferences.setString('step', '1');
           update();
           Get.offAllNamed(AppRoute.teacherDashboard);
         } else {
-          Get.snackbar('Login Error', 'Password or Name');
+          Get.snackbar(tr('loginError'), tr('PasswordNameUsed'));
           statusRequest = StatusRequest.failure;
 
           if (hasData) {
@@ -68,11 +63,15 @@ class TeacherLoginController extends GetxController {
     }
   }
 
+
   void loginTeacherWithData() {
-    name = TextEditingController(
-        text: myServices.sharedPreferences.getStringList('teacherModel')![1]);
-    password = TextEditingController(
-        text: myServices.sharedPreferences.getStringList('teacherModel')![2]);
+    String? jsonString = myServices.sharedPreferences.getString('teacherModel');
+    Map<String, dynamic> jsonMap = jsonDecode(jsonString!);
+    teacherModel = TeacherModel.fromJson(jsonMap);
+    // Use the retrieved object as needed
+
+    name = TextEditingController(text: teacherModel.teacherName);
+    password = TextEditingController(text: teacherModel.teacherPassword);
 
     // validInput(password.text, 8, 50, 'password');
     loginTeacher(true);

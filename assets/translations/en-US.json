@@ -1,25 +1,14 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
   "lang": "عربي",
   "phone": "phone",
+  "PHONE OR NAME": "PHONE OR NAME",
+  "parentPhone": "Parent Phone",
+  "parentName": "Parent Name",
+  "born": "Born Date",
   "connectionError": "Internet Connection Error",
   "name": "name",
   "hour": "Hour",
+  "empty": "Empty Value",
   "min": "Minute",
   "dates": "Dates",
   "refresh": "refresh",
@@ -29,22 +18,40 @@
   "user_type": "User Type",
   "mark": "Mark",
   "exam_mark": "Exam Mark",
+  "not_exam": "Not Exam Mark",
+  "personal": "Personal",
+  "bay": "bay",
+  "exams": "Exams",
+  "attend": "Attend",
+  "PasswordNameUsed": "Password or Name Not Found",
+  "loginError": "Login Error",
   "new_lesson": "New Lesson",
   "no_comment": "No Comment",
   "no_marks": "No Marks",
   "add": "Add",
+  "you_have": "You Have Date",
   "delete": "Delete",
   "ok": "Sure",
-  "successful": "Successful",
+  "successful": "Successful Added",
   "add_student": "Add Student",
   "late": "Late",
+  "minute": "Minutes",
   "date_date": "Date Data",
+  "no_bay": "No Bay",
+  "sum": "Sum",
+  "avg": "Avg",
+  "isNotCome": "is Not Come",
+  "isCome": "is Come",
   "student": "Student",
+  "parent": "parent",
+  "students": "Students",
   "teacher": "Teacher",
   "password": "password",
   "login_student": "Student Login",
   "login_teacher": "Teacher Login",
   "no_lessons": "No Lessons Yet",
+  "lessons": "Lessons",
+  "level": "level",
   "add_date": "Add Date",
   "add_lesson": "Add Lesson To ",
   "add_note": "Add Note",

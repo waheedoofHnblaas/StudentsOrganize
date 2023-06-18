@@ -9,7 +9,7 @@ class AppTextField extends StatelessWidget {
     required this.onChanged,
     required this.validator,
     this.obscureText = false,
-    this.auto = true,
+    this.auto = false,
     this.lines = 1,
     this.onTap,
     required this.textFieldController,

@@ -4,10 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
-
 import 'package:students/core/class/statusrequest.dart';
 import '../function/checkinternet.dart';
-
 
 class Crud {
   Future<Either<StatusRequest, Map>> postData(String urlLink, Map data) async {
@@ -15,11 +13,11 @@ class Crud {
       if (await checkInternet()) {
         var response = await http.post(Uri.parse(urlLink), body: data);
         if (response.statusCode == 200 || response.statusCode == 201) {
-          Map responceBody = jsonDecode(response.body);
-          print('==========responceBody.length================');
-          print(responceBody.length);
+          Map responseBody = jsonDecode(response.body);
+          print('==========response.length================');
+          print(responseBody.length);
           print('==========Crud================');
-          return Right(responceBody);
+          return Right(responseBody);
         } else {
           return const Left(StatusRequest.failure);
         }
@@ -31,8 +29,8 @@ class Crud {
     }
   }
 
-  Future<Either<StatusRequest, Map>> postDataWithImage(String urlLink, Map data,
-      File file) async {
+  Future<Either<StatusRequest, Map>> postDataWithImage(
+      String urlLink, Map data, File file) async {
     try {
       print(data);
       print(file);
@@ -40,8 +38,8 @@ class Crud {
         var request = http.MultipartRequest('POST', Uri.parse(urlLink));
         var length = await file.length();
         var stream = http.ByteStream(file.openRead());
-        var multiparFile = http.MultipartFile(
-            'file', stream, length, filename: basename(file.path));
+        var multiparFile = http.MultipartFile('file', stream, length,
+            filename: basename(file.path));
         request.files.add(multiparFile);
         data.forEach((key, value) {
           request.fields[key] = value;

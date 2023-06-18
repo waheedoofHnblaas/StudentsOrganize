@@ -17,10 +17,9 @@ class MiddleWare extends GetMiddleware {
     if (_myServices.sharedPreferences.getString('step') == '1') {
       // Get.toNamed(AppRoute.loginTeacher);
       TeacherLoginController teacherLoginController =
-          Get.put(TeacherLoginController(),permanent: true);
+          Get.put(TeacherLoginController(), permanent: true);
       teacherLoginController.loginTeacherWithData();
-    }else
-    if (_myServices.sharedPreferences.getString('step') == '2') {
+    } else if (_myServices.sharedPreferences.getString('step') == '2') {
       // Get.toNamed(AppRoute.loginStudent);
       StudentLoginController studentLoginController =
           Get.put(StudentLoginController());
@@ -28,10 +27,5 @@ class MiddleWare extends GetMiddleware {
     } else {
       return RouteSettings(name: AppRoute.userTypePage);
     }
-    // return RouteSettings(name: AppRoute.userTypePage);
-
-    // if (_myServices.sharedPreferences.getString('step') == '2') {//student
-    //   return RouteSettings(name: AppRoute.teacherDashboard);
-    // }
   }
 }

@@ -1,15 +1,28 @@
 class AppRoute {
   static String load = '/';
   static String userTypePage = '/userTypePage';
-  static String teacherDashboard = '/teacherDashboard';
   static String loginStudent = '/loginStudent';
+
+
+
+
+
+
+
+
   static String loginTeacher = '/loginTeacher';
-  static String studentDashboard = '/studentDashboard';
-  static String addDate = '/addDate';
-  static String dateDataPage = '/dateDataPage';
-  static String chooseStudents = '/chooseStudents';
+  static String teacherDashboard = '/teacherDashboard';
+  static String teacherAddLesson = '/teacherAddLesson';
+  static String studentsLessonPage = '/studentsLessonPage';
+  static String studentLessonsPage = '/studentLessonsPage';
+  static String studentDataPage = '/studentDataPage';
+  static String studentBayPage = '/studentBayPage';
+  static String allStudentsBayPage = '/allStudentsBayPage';
+  static String studentComePage = '/studentComePage';
+  static String studentTestsPage = '/studentTestsPage';
   static String addStudent = '/addStudent';
-  static String lessonsData = '/lessonsData';
-  static String addLessonStudent = '/addLessonStudent';
-  static String studentLessons = '/studentLessons';
+  static String registerPage = '/registerPage';
+  static String addStudentLesson = '/addStudentLesson';
+
+
 }

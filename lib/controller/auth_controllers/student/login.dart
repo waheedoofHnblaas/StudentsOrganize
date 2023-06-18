@@ -21,6 +21,7 @@ class StudentLoginController extends GetxController {
   MyServices myServices = Get.find();
   StudentModel studentModel = StudentModel();
 
+
   changeShow() {
     showText = !showText;
     update();
@@ -50,7 +51,7 @@ class StudentLoginController extends GetxController {
           );
           myServices.sharedPreferences.setString('step', '2');
           update();
-          Get.offAllNamed(AppRoute.studentDashboard);
+          // Get.offAllNamed(AppRoute.studentDashboard);
         } else {
           Get.snackbar('Login Error', 'Password');
           statusRequest = StatusRequest.failure;

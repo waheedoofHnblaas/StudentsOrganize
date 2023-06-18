@@ -19,7 +19,7 @@ Future<void> main() async {
         Locale('ar', 'DZ'),
       ],
       path: 'assets/translations',
-      fallbackLocale: const Locale('en', 'US'),
+      fallbackLocale: const Locale('ar', 'DZ'),
       child: DevicePreview(
         builder: (context) => const MyApp(),
         enabled: false,
@@ -55,15 +55,7 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
         ),
-        // appBarTheme: AppBarTheme(
-        //   brightness: Brightness.dark,
-        //   titleTextStyle: Get.theme.appBarTheme.titleTextStyle!.copyWith(
-        //     fontSize: 18,
-        //     fontFamily: 'Cairo',
-        //   ),
-        //   color: Get.theme.primaryColor,
-        //   elevation: 0,
-        // ),
+      
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Get.theme.primaryColor,
         ),

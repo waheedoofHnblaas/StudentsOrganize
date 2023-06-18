@@ -12,7 +12,7 @@ class LoginTeacherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TeacherLoginController(),permanent: true);
+    Get.put(TeacherLoginController(), permanent: true);
     return Scaffold(
       appBar: AppBar(title: const Text('login_teacher').tr()),
       body: Center(

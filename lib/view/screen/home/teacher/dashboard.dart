@@ -1,153 +1,137 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:students/controller/auth_controllers/teacher/teacherController.dart';
 import 'package:students/core/class/handelingview.dart';
 import 'package:students/core/constant/approutes.dart';
-import 'package:students/data/model/date_model.dart';
-import 'package:students/view/widget/teacher_drawer.dart';
-import '../../../../controller/dates_controller/teacher_date_controller.dart';
 
-class TeacherDashboardPage extends StatelessWidget {
-  const TeacherDashboardPage({Key? key}) : super(key: key);
+class TeacherDashboard extends StatelessWidget {
+  const TeacherDashboard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TeacherDateController teacherDateController =
-        Get.put(TeacherDateController());
+    TeacherController teacherController = Get.put(TeacherController());
 
-    BoxDecoration cardWidgetDecoration() {
-      return BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Get.theme.primaryColor.withOpacity(0.9),
-            Get.theme.primaryColor.withOpacity(0.7),
-            Get.theme.primaryColor.withOpacity(0.7),
-            Get.theme.primaryColor.withOpacity(0.3),
-          ],
-          stops: const [0.0, (100 - 56.23) / 100, (100 - 56.23) / 100, 1.0],
-          end: Alignment.bottomCenter,
-          begin: Alignment.topCenter,
-        ),
-        color: Get.theme.primaryColor.withOpacity(0.5),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(20),
-        ),
-      );
-    }
-
-    Widget dateCardWidget(int i) {
-      int index = teacherDateController.datesList.length - 1 - i;
-      List<DateModel> dates = teacherDateController.datesList;
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                dates[index].dateCreate.toString().split(' ')[0],
-                style: Get.textTheme.bodySmall!.copyWith(color: Colors.grey),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              decoration: cardWidgetDecoration(),
-              child: InkWell(
-                onTap: () {
-                  teacherDateController.toDataPage(dates[index]);
-                },
-                onLongPress: () async {
-                  await teacherDateController.showDeleteDateSnackBar(
-                    teacherDateController.teacherModel.teacherId.toString(),
-                    dates[index].dateId.toString(),
-                  );
-                },
-                child: ListTile(
-                  style: ListTileStyle.drawer,
-                  title: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 44.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          dates[index].dateDay.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(dates[index].dateTime.toString()),
-                        SizedBox(
-                          width: Get.width / 3,
-                          child:
-                              Text('${tr('period')}  ${dates[index].datePer}'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    datesList() {
-      return RefreshIndicator(
-        onRefresh: () async {
-          return await teacherDateController.getDateByTeacherId();
+    Widget lessonCard(int index) {
+      return InkWell(
+        onTap: () {
+          teacherController.toLessonStudentsPage(
+            teacherController.teacherLessonsList[index].lessonId.toString(),
+          );
         },
-        child: ListView.builder(
-          itemCount: teacherDateController.datesList.length,
-          itemBuilder: (context, i) {
-            if (teacherDateController.datesList.isNotEmpty) {
-              return dateCardWidget(i);
-            } else {
-              return const Text('NoDates or No Internet');
-            }
-          },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            shape: const OutlineInputBorder(
+              borderSide: BorderSide(width: 0.4),
+              borderRadius: BorderRadius.all(
+                Radius.circular(18),
+              ),
+            ),
+            textColor: Get.theme.scaffoldBackgroundColor,
+            tileColor: Get.theme.primaryColor.withOpacity(0.8),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: Get.width / 10,
+            ),
+            minVerticalPadding: 10,
+            title: Text(
+              teacherController.teacherLessonsList[index].lessonDay.toString(),
+            ),
+            trailing: Text(
+              teacherController.teacherLessonsList[index].lessonTime.toString(),
+            ),
+          ),
         ),
       );
     }
 
-    emptyListWidget() {
+    drawerWidget() {
       return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('no_dates').tr(),
-          const SizedBox(
-            height: 20,
-          ),
-          IconButton(
-            onPressed: () async {
-              await teacherDateController.getDateByTeacherId();
+          InkWell(
+            onTap: () {
+              teacherController.toAllStudentsBayPage();
             },
-            icon: const Icon(Icons.refresh),
+            child: ListTile(
+              title: const Text(
+                'bay',
+                style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+              ).tr(),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              teacherController.logout();
+            },
+            child: ListTile(
+              title: const Text(
+                'logout',
+                style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+              ).tr(),
+            ),
           ),
         ],
       );
     }
 
     return Scaffold(
+      endDrawer: Drawer(
+        child: SafeArea(
+          child: drawerWidget(),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Get.toNamed(AppRoute.addDate);
+        onPressed: () {
+          teacherController.toAddLessonPage();
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+        ),
       ),
       appBar: AppBar(
-        title: const Text('dates').tr(),
+        title: Row(
+          children: [
+            const Text('teacher').tr(),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(': ${teacherController.teacherModel.teacherName!}'),
+          ],
+        ),
       ),
-      drawer: const DrawerTeacherWidget(),
       body: Center(
-        child: GetBuilder<TeacherDateController>(
-          builder: (teacherDateController) {
+        child: GetBuilder<TeacherController>(
+          builder: (controller) {
             return HandelingRequest(
-              statusRequest: teacherDateController.statusRequest!,
-              widget: teacherDateController.datesList.isNotEmpty
-                  ? datesList()
-                  : emptyListWidget(),
+              statusRequest: controller.statusRequest!,
+              widget: controller.teacherLessonsList.isNotEmpty
+                  ? RefreshIndicator(
+                      edgeOffset: Get.height / 8,
+                      onRefresh: () async {
+                        await controller.getTeacherLessons();
+                      },
+                      child: ListView.builder(
+                        itemCount: controller.teacherLessonsList.length,
+                        itemBuilder: (context, index) {
+                          return lessonCard(index);
+                        },
+                      ),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('no_lessons').tr(),
+                        const SizedBox(
+                          height: 33,
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            await teacherController.getTeacherLessons();
+                          },
+                          icon: const Icon(Icons.refresh),
+                        )
+                      ],
+                    ),
             );
           },
         ),

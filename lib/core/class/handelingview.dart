@@ -54,6 +54,7 @@ class HandelingRequest extends StatelessWidget {
     } else if (statusRequest == StatusRequest.serverExp ||
         statusRequest == StatusRequest.offline) {
       return Column(
+
         children: [const Text('Error'), widget],
       );
     } else {

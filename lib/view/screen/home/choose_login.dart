@@ -27,17 +27,17 @@ class UserTypePage extends StatelessWidget {
                 Get.toNamed(AppRoute.loginTeacher);
               },
             ),
-            AppSignUpAndLoginButton(
-              text: tr('change_lang'),
-              onPressed: () async {
-                if (context.locale == const Locale('ar', 'DZ')) {
-                  context.locale = const Locale('en', 'US');
-                } else {
-                  context.locale = const Locale('ar', 'DZ');
-                }
-                Get.updateLocale(context.locale);
-              },
-            ),
+            // AppSignUpAndLoginButton(
+            //   text: tr('change_lang'),
+            //   onPressed: () async {
+            //     if (context.locale == const Locale('ar', 'DZ')) {
+            //       context.locale = const Locale('en', 'US');
+            //     } else {
+            //       context.locale = const Locale('ar', 'DZ');
+            //     }
+            //     Get.updateLocale(context.locale);
+            //   },
+            // ),
           ],
         ),
       ),
