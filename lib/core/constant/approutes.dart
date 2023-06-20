@@ -1,7 +1,17 @@
 class AppRoute {
   static String load = '/';
   static String userTypePage = '/userTypePage';
+
+
+
+
+//====================== Student =====================
   static String loginStudent = '/loginStudent';
+  static String studentDashboard = '/studentDashboard';
+  static String noteModeStudentPage = '/noteModeStudentPage';
+  static String comeModeStudentPage = '/comeModeStudentPage';
+  static String bayModeStudentPage = '/bayModeStudentPage';
+  static String subjectsModeStudentPage = '/testsModeStudentPage';
 
 
 
@@ -9,7 +19,7 @@ class AppRoute {
 
 
 
-
+//====================== Teacher =====================
   static String loginTeacher = '/loginTeacher';
   static String teacherDashboard = '/teacherDashboard';
   static String teacherAddLesson = '/teacherAddLesson';
@@ -23,6 +33,6 @@ class AppRoute {
   static String addStudent = '/addStudent';
   static String registerPage = '/registerPage';
   static String addStudentLesson = '/addStudentLesson';
-
+  static String friendsTestsPage = '/friendsTestsPage';
 
 }

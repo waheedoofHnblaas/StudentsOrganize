@@ -56,17 +56,18 @@ class AllStudentsBayController extends GetxController {
         .getStudentBay(studentsList[index].studentId.toString());
   }
 
-  void addStudentBay() {
+  void addStudentBay(context) {
     TextEditingController quantityController = TextEditingController(text: '');
-    Get.showSnackbar(
-      GetSnackBar(
-        backgroundColor: Get.theme.scaffoldBackgroundColor,
-        titleText: Text(
-          'bay',
-          style: TextStyle(color: Get.theme.primaryColor),
-        ).tr(),
-        messageText: Column(
+    Get.defaultDialog(
+      title: tr('bay'),
+      content: SizedBox(
+        height: Get.height / 3,
+        child: Column(
           children: [
+            Text(
+              'bay',
+              style: TextStyle(color: Get.theme.primaryColor),
+            ).tr(),
             AppTextField(
               auto: true,
               type: tr('bay'),
@@ -79,6 +80,7 @@ class AllStudentsBayController extends GetxController {
             AppSignUpAndLoginButton(
               text: tr('add'),
               onPressed: () async {
+
                 await bay(quantityController.text);
               },
             )
@@ -89,39 +91,34 @@ class AllStudentsBayController extends GetxController {
   }
 
   bay(String quantity) async {
-    statusRequest = StatusRequest.loading;
-    update();
-    try {
-      var response = await studentBayData.studentBayData(
-          quantity: quantity, studentId: studentId);
-      statusRequest = handlingData(response);
-      print(response);
-      if (statusRequest == StatusRequest.success) {
-        if (response['status'] == 'success') {
+    if (quantity.isNotEmpty) {
+      Get.back();
+      statusRequest = StatusRequest.loading;
+      update();
+      try {
+        var response = await studentBayData.studentBayData(
+          quantity: quantity,
+          studentId: studentId,
+        );
 
-          // for (var element in studentsList) {
-          //   if (studentsList[index].studentId.toString() ==
-          //       element.studentId.toString()) {
-          //     studentsList.remove(element);
-          //   }
-          // }
-          Get.back();
-          if(Get.isSnackbarOpen){
-            Get.back();
+        statusRequest = handlingData(response);
+        print(response);
+        if (statusRequest == StatusRequest.success) {
+          if (response['status'] == 'success') {
+            Get.snackbar(tr('successful'), "");
+            StudentDataController studentDataController =
+                Get.put(StudentDataController());
+            await studentDataController.getStudentBay(studentId);
           }
-          Get.snackbar(tr('successful'), "");
-          StudentDataController studentDataController =
-              Get.put(StudentDataController());
-          await studentDataController.getStudentBay(studentId);
+        } else {
+          Get.snackbar(tr('connectionError'), "");
         }
-      } else {
-        Get.snackbar(tr('connectionError'), "");
+      } catch (e) {
+        print('getTeacherLessons catch $e');
       }
-    } catch (e) {
-      print('getTeacherLessons catch $e');
-    }
 
-    statusRequest = StatusRequest.success;
-    update();
+      statusRequest = StatusRequest.success;
+      update();
+    }
   }
 }

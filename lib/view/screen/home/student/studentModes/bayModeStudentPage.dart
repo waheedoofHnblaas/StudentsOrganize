@@ -1,28 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:students/controller/auth_controllers/teacher/allStudentsBayController.dart';
-import 'package:students/controller/auth_controllers/teacher/studentDataController.dart';
-import 'package:students/core/class/handelingview.dart';
+import 'package:students/controller/auth_controllers/student/stdBayController.dart';
 
-class StudentBayPage extends StatelessWidget {
-  const StudentBayPage({Key? key}) : super(key: key);
+import '../../../../../core/class/handelingview.dart';
+
+class BayModeStudentPage extends StatelessWidget {
+  const BayModeStudentPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    AllStudentsBayController allStudentsBayController =
-        Get.put(AllStudentsBayController());
+    StdBayController controller = Get.find();
     return Scaffold(
-      floatingActionButton:  FloatingActionButton(
-        onPressed: () {
-          allStudentsBayController.addStudentBay(context);
-          print(allStudentsBayController.studentId.toString());
-        },
-        child: const Icon(Icons.add),
-      ),
       appBar: AppBar(title: const Text('bay').tr()),
       body: Center(
-        child: GetBuilder<StudentDataController>(
+        child: GetBuilder<StdBayController>(
           builder: (controller) {
             return HandelingRequest(
               statusRequest: controller.statusRequest!,
@@ -49,12 +41,14 @@ class StudentBayPage extends StatelessWidget {
                             itemCount: controller.bayModelList.length,
                             itemBuilder: (context, index) {
                               return ListTile(
-                                title: Text(controller
-                                    .bayModelList[index].quantity
-                                    .toString()),
-                                trailing: Text(controller
-                                    .bayModelList[index].bayDate
-                                    .toString()),
+                                title: Text(
+                                  controller.bayModelList[index].quantity
+                                      .toString(),
+                                ),
+                                trailing: Text(
+                                  controller.bayModelList[index].bayDate
+                                      .toString(),
+                                ),
                               );
                             },
                           ),

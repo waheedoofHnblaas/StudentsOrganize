@@ -20,22 +20,25 @@ class TeacherDashboard extends StatelessWidget {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: ListTile(
             shape: const OutlineInputBorder(
               borderSide: BorderSide(width: 0.4),
               borderRadius: BorderRadius.all(
-                Radius.circular(18),
+                Radius.circular(12),
               ),
             ),
             textColor: Get.theme.scaffoldBackgroundColor,
-            tileColor: Get.theme.primaryColor.withOpacity(0.8),
+            tileColor: Get.theme.primaryColor.withOpacity(0.75),
             contentPadding: EdgeInsets.symmetric(
               horizontal: Get.width / 10,
             ),
             minVerticalPadding: 10,
             title: Text(
               teacherController.teacherLessonsList[index].lessonDay.toString(),
+            ),
+            subtitle: Text(
+              teacherController.teacherLessonsList[index].lessonNote.toString(),
             ),
             trailing: Text(
               teacherController.teacherLessonsList[index].lessonTime.toString(),
@@ -106,14 +109,24 @@ class TeacherDashboard extends StatelessWidget {
               statusRequest: controller.statusRequest!,
               widget: controller.teacherLessonsList.isNotEmpty
                   ? RefreshIndicator(
-                      edgeOffset: Get.height / 8,
+                      // edgeOffset: Get.height / 5,
+                      color: Get.theme.primaryColor,
                       onRefresh: () async {
                         await controller.getTeacherLessons();
                       },
                       child: ListView.builder(
                         itemCount: controller.teacherLessonsList.length,
                         itemBuilder: (context, index) {
-                          return lessonCard(index);
+                          return Column(
+                            children: [
+                              lessonCard(index),
+                              controller.teacherLessonsList.length == index+1
+                                  ? SizedBox(
+                                      height: Get.height / 8,
+                                    )
+                                  : Container(),
+                            ],
+                          );
                         },
                       ),
                     )

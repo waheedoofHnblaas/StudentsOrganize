@@ -1,15 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart';
-import 'package:students/core/class/statusrequest.dart';
-import 'package:students/data/datasource/remote/student/getStudent.dart';
-import 'package:students/data/model/bayModel.dart';
-import 'package:students/data/model/student_model.dart';
-
+import '../../../core/class/statusrequest.dart';
 import '../../../core/function/handlingdata.dart';
 import '../../../core/services/services.dart';
+import '../../../data/datasource/remote/student/getStudent.dart';
+import '../../../data/model/bayModel.dart';
 
-class StudentDataController extends GetxController {
-  StudentModel studentModel = StudentModel();
+class StdBayController extends GetxController {
   List<BayModel> bayModelList = [];
   MyServices myServices = Get.find();
   StudentData studentData = StudentData(Get.find());
@@ -19,39 +16,14 @@ class StudentDataController extends GetxController {
   late String studentModelId;
 
   @override
-  Future<void> onInit() async {
+  void onInit() {
     super.onInit();
   }
-
-  getStudentData(String id) async {
-    studentModelId = id;
-    bayModelList.clear();
-    statusRequest = StatusRequest.loading;
-    update();
-    try {
-      var response = await studentData.getStudentData(studentId: studentModelId);
-      statusRequest = handlingData(response);
-      print(response);
-      if (statusRequest == StatusRequest.success) {
-        if (response['status'] == 'success') {
-          studentModel = StudentModel.fromJson(response['data']);
-        }
-      } else {
-        Get.snackbar(tr('connectionError'), "");
-      }
-    } catch (e) {
-      print('getTeacherLessons catch $e');
-    }
-
-    statusRequest = StatusRequest.success;
-    update();
-  }
-
 
   Future<void> getStudentBay(String studentId) async {
     statusRequest = StatusRequest.loading;
     update();
-    studentModelId=studentId;
+    studentModelId = studentId;
     bayModelList.clear();
     try {
       var response = await studentData.getStudentBay(studentId: studentModelId);
@@ -85,7 +57,5 @@ class StudentDataController extends GetxController {
         sum += double.parse(element.quantity.toString());
       }
     }
-
-    update();
   }
 }

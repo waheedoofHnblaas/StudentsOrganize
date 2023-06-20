@@ -19,6 +19,7 @@ class StudentLessonsData {
     );
     return response.fold((l) => l, (r) => r);
   }
+
   getStudentsData() async {
     var response = await crud.postData(
       AppLinks.getStudentsNotIn,
@@ -68,6 +69,18 @@ class StudentLessonsData {
         'late': '',
         'student_lesson_note': '',
         'student_lesson_isCome': studentIsCome,
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
+
+  getStudentFriendTestsData({
+    required String lessonId,
+  }) async {
+    var response = await crud.postData(
+      AppLinks.getStudentFriendTests,
+      {
+        'lesson_id': lessonId,
       },
     );
     return response.fold((l) => l, (r) => r);

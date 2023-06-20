@@ -4,6 +4,12 @@ import 'package:students/view/screen/auth/student/login_student.dart';
 import 'package:students/view/screen/auth/teacher/login_teacher.dart';
 import 'package:students/view/screen/home/choose_login.dart';
 import 'package:students/view/screen/home/load_page.dart';
+import 'package:students/view/screen/home/student/studentDashboardPage.dart';
+import 'package:students/view/screen/home/student/studentModes/bayModeStudentPage.dart';
+import 'package:students/view/screen/home/student/studentModes/comeModeStudentPage.dart';
+import 'package:students/view/screen/home/student/studentModes/friendsTestsPage.dart';
+import 'package:students/view/screen/home/student/studentModes/noteModeStudentPage.dart';
+import 'package:students/view/screen/home/student/studentModes/testsModeStudentPage.dart';
 import 'package:students/view/screen/home/teacher/dashboard.dart';
 import 'package:students/view/screen/home/teacher/studentData/allStudentsBayPage.dart';
 import 'package:students/view/screen/home/teacher/studentData/registerStudentPage.dart';
@@ -26,10 +32,38 @@ List<GetPage<dynamic>>? routes = [
     name: AppRoute.userTypePage,
     page: () => const UserTypePage(),
   ),
+
+  //=====================Student=====================
   GetPage(
     name: AppRoute.loginStudent,
     page: () => const LoginStudentPage(),
   ),
+  GetPage(
+    name: AppRoute.studentDashboard,
+    page: () => const StudentDashboardPage(),
+  ),
+  GetPage(
+    name: AppRoute.subjectsModeStudentPage,
+    page: () => const TestsModeStudentPage(),
+  ),
+  GetPage(
+    name: AppRoute.noteModeStudentPage,
+    page: () => const NoteModeStudentPage(),
+  ),
+  GetPage(
+    name: AppRoute.bayModeStudentPage,
+    page: () => const BayModeStudentPage(),
+  ),
+  GetPage(
+    name: AppRoute.comeModeStudentPage,
+    page: () => const ComeModeStudentPage(),
+  ),
+  GetPage(
+    name: AppRoute.friendsTestsPage,
+    page: () => const FriendsTestsPage(),
+  ),
+
+  //=====================Teacher=====================
   GetPage(
     name: AppRoute.loginTeacher,
     page: () => const LoginTeacherPage(),

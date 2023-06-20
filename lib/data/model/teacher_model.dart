@@ -5,6 +5,8 @@ class TeacherModel {
   String? teacherCreate;
   String? subjectId;
   String? teacherPhone;
+  String? subjectName;
+  String? subjectMark;
 
   TeacherModel(
       {this.teacherId,
@@ -12,7 +14,9 @@ class TeacherModel {
         this.teacherPassword,
         this.teacherCreate,
         this.subjectId,
-        this.teacherPhone});
+        this.teacherPhone,
+        this.subjectName,
+        this.subjectMark});
 
   TeacherModel.fromJson(Map<String, dynamic> json) {
     teacherId = json['teacher_id'];
@@ -21,6 +25,8 @@ class TeacherModel {
     teacherCreate = json['teacher_create'];
     subjectId = json['subject_id'];
     teacherPhone = json['teacher_phone'];
+    subjectName = json['subject_name'];
+    subjectMark = json['subject_mark'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +37,8 @@ class TeacherModel {
     data['teacher_create'] = teacherCreate;
     data['subject_id'] = subjectId;
     data['teacher_phone'] = teacherPhone;
+    data['subject_name'] = subjectName;
+    data['subject_mark'] = subjectMark;
     return data;
   }
 }

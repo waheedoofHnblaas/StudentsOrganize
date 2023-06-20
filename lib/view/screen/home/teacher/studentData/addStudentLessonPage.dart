@@ -8,6 +8,8 @@ import 'package:students/core/class/handelingview.dart';
 import 'package:students/view/widget/auth/apploginbutton.dart';
 import 'package:students/view/widget/auth/apptextfield.dart';
 
+import '../../../../../controller/auth_controllers/teacher/teacherController.dart';
+
 class AddStudentLesson extends StatelessWidget {
   const AddStudentLesson({Key? key}) : super(key: key);
 
@@ -15,6 +17,7 @@ class AddStudentLesson extends StatelessWidget {
   Widget build(BuildContext context) {
     StudentLessonsController studentLessonsController = Get.find();
 
+    TeacherController teacherController = Get.find();
     comeWidget() {
       return InkWell(
         onTap: () {
@@ -42,7 +45,7 @@ class AddStudentLesson extends StatelessWidget {
       );
     }
 
-    examWidget() {
+    isExamWidget() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -59,6 +62,39 @@ class AddStudentLesson extends StatelessWidget {
             onChanged: (value) {
               studentLessonsController.isExamChange();
             },
+          ),
+        ],
+      );
+    }
+
+
+    levelWidget() {
+      String mark = teacherController.teacherModel.subjectMark.toString();
+      return Row(
+        children: [
+          Column(
+            children: [
+              Text(studentLessonsController.isExam ? 'exam_mark' : 'level')
+                  .tr(),
+              Text(
+                '${studentLessonsController.level.text} / $mark',
+              ),
+            ],
+          ),
+          Expanded(
+            child: Slider(
+              min: 0,
+              max: double.parse(mark),
+              divisions: int.parse(mark)*2,
+              value: double.parse(
+                studentLessonsController.level.text,
+              ),
+              label: '${studentLessonsController.level.text} / $mark',
+              onChanged: (value) {
+                studentLessonsController.level.text = value.toStringAsFixed(2);
+                studentLessonsController.update();
+              },
+            ),
           ),
         ],
       );
@@ -84,38 +120,6 @@ class AddStudentLesson extends StatelessWidget {
         ),
       );
     }
-
-    levelWidget() {
-      return Row(
-        children: [
-          Column(
-            children: [
-              Text(studentLessonsController.isExam ? 'exam_mark' : 'level')
-                  .tr(),
-              Text(
-                '${studentLessonsController.level.text} ${studentLessonsController.isExam ? '' : '%'}',
-              ),
-            ],
-          ),
-          Expanded(
-            child: Slider(
-              min: 0,
-              max: 100,
-              divisions: 100,
-              value: double.parse(
-                studentLessonsController.level.text,
-              ),
-              label: '${studentLessonsController.level.text} %',
-              onChanged: (value) {
-                studentLessonsController.level.text = value.toStringAsFixed(2);
-                studentLessonsController.update();
-              },
-            ),
-          ),
-        ],
-      );
-    }
-
     noteWidget() {
       return AppTextField(
         lines: 3,
@@ -162,7 +166,7 @@ class AddStudentLesson extends StatelessWidget {
                               const Divider(),
                               lateWidget(),
                               const Divider(),
-                              examWidget(),
+                              isExamWidget(),
                               levelWidget(),
                               const Divider(),
                               noteWidget(),

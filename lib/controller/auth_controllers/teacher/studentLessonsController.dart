@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:students/controller/auth_controllers/teacher/allStudentsBayController.dart';
+import 'package:students/controller/auth_controllers/teacher/login.dart';
 import 'package:students/controller/auth_controllers/teacher/studentDataController.dart';
+import 'package:students/controller/auth_controllers/teacher/teacherController.dart';
 import 'package:students/core/constant/approutes.dart';
 import 'package:students/core/function/handlingdata.dart';
 

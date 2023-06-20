@@ -40,7 +40,7 @@ class TeacherLoginController extends GetxController {
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == 'success') {
           teacherModel = TeacherModel.fromJson(response['data']);
-          teacherModel.teacherPassword=password.text;
+          teacherModel.teacherPassword = password.text;
           String jsonString = jsonEncode(teacherModel.toJson());
           await myServices.sharedPreferences
               .setString('teacherModel', jsonString);
@@ -62,7 +62,6 @@ class TeacherLoginController extends GetxController {
       print('not validate');
     }
   }
-
 
   void loginTeacherWithData() {
     String? jsonString = myServices.sharedPreferences.getString('teacherModel');

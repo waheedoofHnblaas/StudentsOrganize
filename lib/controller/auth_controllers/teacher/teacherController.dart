@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:students/controller/auth_controllers/teacher/allStudentsBayController.dart';
 import 'package:students/controller/auth_controllers/teacher/studentLessonController.dart';
@@ -76,14 +77,22 @@ class TeacherController extends GetxController {
   }
 
   void logout() {
-    myServices.sharedPreferences.clear();
-    Get.offAllNamed(AppRoute.userTypePage);
+    Get.defaultDialog(
+      title: tr('logout'),
+      content: TextButton(
+        onPressed: () {
+          myServices.sharedPreferences.clear();
+          Get.offAllNamed(AppRoute.userTypePage);
+        },
+        child: const Text('ok').tr(),
+      ),
+    );
   }
 
   Future<void> toAllStudentsBayPage() async {
     Get.toNamed(AppRoute.allStudentsBayPage);
-    AllStudentsBayController studentsController=Get.put(AllStudentsBayController());
+    AllStudentsBayController studentsController =
+        Get.put(AllStudentsBayController());
     await studentsController.getStudents();
-
   }
 }

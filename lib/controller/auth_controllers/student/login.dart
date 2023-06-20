@@ -1,16 +1,13 @@
+import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:students/core/class/statusrequest.dart';
 import 'package:students/core/constant/approutes.dart';
-import 'package:students/core/function/validinput.dart';
 import 'package:students/data/datasource/remote/auth/student/loginDate.dart';
 import 'package:students/data/model/student_model.dart';
-import 'package:students/data/model/teacher_model.dart';
-
 import '../../../core/function/handlingdata.dart';
 import '../../../core/services/services.dart';
-import '../../../data/datasource/remote/auth/teacher/login.dart';
 
 class StudentLoginController extends GetxController {
   TextEditingController password = TextEditingController();
@@ -39,27 +36,25 @@ class StudentLoginController extends GetxController {
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == 'success') {
           studentModel = StudentModel.fromJson(response['data']);
-          myServices.sharedPreferences.setStringList(
-            'studentModel',
-            [
-              studentModel.studentId.toString(),
-              studentModel.studentName.toString(),
-              password.text,
-              studentModel.studentCreate.toString(),
-              studentModel.studentPhone.toString(),
-            ],
-          );
+
+          studentModel.studentPassword=password.text;
+          String jsonString = jsonEncode(studentModel.toJson());
+          await myServices.sharedPreferences
+              .setString('studentModel', jsonString);
           myServices.sharedPreferences.setString('step', '2');
+                    myServices.sharedPreferences.setString('step', '2');
           update();
-          // Get.offAllNamed(AppRoute.studentDashboard);
+          Get.offAllNamed(AppRoute.studentDashboard);
         } else {
-          Get.snackbar('Login Error', 'Password');
+          Get.snackbar(tr('LoginError'), tr('PasswordError'));
           statusRequest = StatusRequest.failure;
           if(hasData) {
             Get.offNamed(AppRoute.userTypePage);
           }
 
         }
+      }else{
+        Get.snackbar(tr('LoginError'), tr('PasswordError'));
       }
       update();
       print('validate');
@@ -69,8 +64,15 @@ class StudentLoginController extends GetxController {
   }
 
   void loginStudentWithData() async {
-    password = TextEditingController(
-        text: myServices.sharedPreferences.getStringList('studentModel')![2]);
+    String? jsonString = myServices.sharedPreferences.getString('studentModel');
+    Map<String, dynamic> jsonMap = jsonDecode(jsonString!);
+    studentModel = StudentModel.fromJson(jsonMap);
+    // Use the retrieved object as needed
+
+    password = TextEditingController(text: studentModel.studentPassword);
+
+    // password = TextEditingController(
+    //     text: myServices.sharedPreferences.getStringList('studentModel')![2]);
 
     // validInput(password.text, 8, 50, 'password');
     await loginStudent(true);
