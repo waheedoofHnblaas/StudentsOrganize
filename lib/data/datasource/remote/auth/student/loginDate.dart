@@ -27,6 +27,7 @@ class LoginInfoData {
     required String studentParentPhone,
     required String studentBornDate,
     required String studentType,
+    required String studentBay,
   }) async {
     var response = await crud.postData(
       AppLinks.registerStudentLink,
@@ -39,6 +40,7 @@ class LoginInfoData {
         'student_parent_phone': studentParentPhone,
         'student_born_date': studentBornDate,
         'student_type': studentType,
+        'student_bay': studentBay,
       },
     );
     return response.fold((l) => l, (r) => r);

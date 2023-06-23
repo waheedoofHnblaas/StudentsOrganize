@@ -14,10 +14,11 @@ class StudentDashboardController extends GetxController {
   MyServices myServices = Get.find();
   StudentModel studentModel = StudentModel();
 
+  StdTestsComeController controller = Get.put(StdTestsComeController());
+
   @override
   Future<void> onInit() async {
     getStudentData();
-    StdTestsComeController controller = Get.put(StdTestsComeController());
     await controller.getStudentSubjects(studentModel.studentId.toString());
     super.onInit();
   }
@@ -48,7 +49,8 @@ class StudentDashboardController extends GetxController {
     await controller.getStudentBay(studentModel.studentId.toString());
   }
 
-  void toStudentSubjectsComesPage() {
+  Future<void> toStudentSubjectsComesPage() async {
+    await controller.getComeList();
     Get.toNamed(AppRoute.comeModeStudentPage);
   }
 
@@ -60,5 +62,9 @@ class StudentDashboardController extends GetxController {
     Get.toNamed(AppRoute.subjectsModeStudentPage);
     StdTestsComeController stdTestsComeController = Get.find();
     stdTestsComeController.setSort('');
+  }
+
+  void toStudentAllDataPage() {
+    Get.toNamed(AppRoute.allDataStudentPage);
   }
 }

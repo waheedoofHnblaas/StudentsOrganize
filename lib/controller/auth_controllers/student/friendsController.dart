@@ -14,11 +14,10 @@ class FriendsController extends GetxController {
   MyServices myServices = Get.find();
   StatusRequest? statusRequest = StatusRequest.none;
   late StudentSubjectModel passedStudentSubjectModel;
+  double testsSum = 0.0;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // double maxMark = 0;
+  // double minMark = 0;
 
   Future<void> getFriendsTests(StudentSubjectModel subjectModel) async {
     statusRequest = StatusRequest.loading;
@@ -45,8 +44,16 @@ class FriendsController extends GetxController {
 
             if (allowAdd) {
               friendsTestsList.add(friendTestModel);
+              testsSum += double.parse(friendTestModel.test.toString());
             }
           }
+          friendsTestsList.sort(
+            (a, b) => double.parse(a.test.toString()).compareTo(
+              double.parse(
+                b.test.toString(),
+              ),
+            ),
+          );
         }
       } else {
         Get.snackbar(tr('connectionError'), "");

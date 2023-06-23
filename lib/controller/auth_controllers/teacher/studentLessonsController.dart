@@ -7,6 +7,7 @@ import 'package:students/controller/auth_controllers/teacher/studentDataControll
 import 'package:students/controller/auth_controllers/teacher/teacherController.dart';
 import 'package:students/core/constant/approutes.dart';
 import 'package:students/core/function/handlingdata.dart';
+import 'package:students/data/model/student_model.dart';
 
 import '../../../core/class/statusrequest.dart';
 import '../../../data/datasource/remote/student_lesson/getStudentLessons.dart';
@@ -92,12 +93,12 @@ class StudentLessonsController extends GetxController {
     Get.toNamed(AppRoute.studentDataPage);
   }
 
-  void toStudentBayPage(String studentMId) {
+  void toStudentBayPage(StudentLessonModel studentMId) {
     Get.toNamed(AppRoute.studentBayPage);
     AllStudentsBayController allStudentsBayController =
         Get.put(AllStudentsBayController());
-    allStudentsBayController.studentId = studentMId;
-    studentDataController.getStudentBay(studentMId);
+    allStudentsBayController.studentId = studentMId.studentId.toString();
+    studentDataController.getStudentBay(studentMId.studentId.toString());
   }
 
   double sum = 0;

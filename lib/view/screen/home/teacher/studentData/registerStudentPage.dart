@@ -167,6 +167,17 @@ class RegisterStudentPage extends StatelessWidget {
                           textFieldController:
                               studentsController.parentPhoneTextController,
                         ),
+                        AppTextField(
+                          type: tr('studentBay'),
+                          iconData: Icons.monetization_on_outlined,
+                          inputType: TextInputType.number,
+                          onChanged: (p0) {},
+                          validator: (p0) {
+                            return validInput(p0!, 1, 30, 'password');
+                          },
+                          textFieldController:
+                              studentsController.bayController,
+                        ),
                       ],
                     ),
                   ),

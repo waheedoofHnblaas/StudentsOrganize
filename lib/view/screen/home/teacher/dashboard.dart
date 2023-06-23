@@ -109,7 +109,6 @@ class TeacherDashboard extends StatelessWidget {
               statusRequest: controller.statusRequest!,
               widget: controller.teacherLessonsList.isNotEmpty
                   ? RefreshIndicator(
-                      // edgeOffset: Get.height / 5,
                       color: Get.theme.primaryColor,
                       onRefresh: () async {
                         await controller.getTeacherLessons();

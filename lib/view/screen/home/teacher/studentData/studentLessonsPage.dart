@@ -85,21 +85,26 @@ class StudentLessonsPage extends StatelessWidget {
           ),
           const Divider(),
           InkWell(
-              onTap: () {
-                studentLessonsController.toStudentDataPage(
-                  studentLessonsController.studentLessonModel.studentId
-                      .toString(),
-                );
-              },
-              child: ListTile(title: const Text('personal').tr())),
+            onTap: () {
+              studentLessonsController.toStudentDataPage(
+                studentLessonsController.studentLessonModel.studentId
+                    .toString(),
+              );
+            },
+            child: ListTile(
+              title: const Text('personal').tr(),
+            ),
+          ),
           InkWell(
-              onTap: () {
-                studentLessonsController.toStudentBayPage(
-                  studentLessonsController.studentLessonModel.studentId
-                      .toString(),
-                );
-              },
-              child: ListTile(title: const Text('bay').tr())),
+            onTap: () {
+              studentLessonsController.toStudentBayPage(
+                studentLessonsController.studentLessonModel,
+              );
+            },
+            child: ListTile(
+              title: const Text('bay').tr(),
+            ),
+          ),
           InkWell(
             onTap: () {
               studentLessonsController.toStudentTestsPage();

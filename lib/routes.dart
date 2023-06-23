@@ -4,6 +4,7 @@ import 'package:students/view/screen/auth/student/login_student.dart';
 import 'package:students/view/screen/auth/teacher/login_teacher.dart';
 import 'package:students/view/screen/home/choose_login.dart';
 import 'package:students/view/screen/home/load_page.dart';
+import 'package:students/view/screen/home/student/studentAllDataPage.dart';
 import 'package:students/view/screen/home/student/studentDashboardPage.dart';
 import 'package:students/view/screen/home/student/studentModes/bayModeStudentPage.dart';
 import 'package:students/view/screen/home/student/studentModes/comeModeStudentPage.dart';
@@ -61,6 +62,10 @@ List<GetPage<dynamic>>? routes = [
   GetPage(
     name: AppRoute.friendsTestsPage,
     page: () => const FriendsTestsPage(),
+  ),
+  GetPage(
+    name: AppRoute.allDataStudentPage,
+    page: () => const StudentAllDataPage(),
   ),
 
   //=====================Teacher=====================

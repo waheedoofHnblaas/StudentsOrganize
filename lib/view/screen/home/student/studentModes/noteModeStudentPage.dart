@@ -39,24 +39,6 @@ class NoteModeStudentPage extends StatelessWidget {
                                         .toString(),
                                   ),
                                 ),
-                                // SizedBox(
-                                //   width: Get.width / 7,
-                                //   child: Row(
-                                //     children: [
-                                //       Text(
-                                //         controller.notesList[index].level
-                                //             .toString(),
-                                //         style: TextStyle(
-                                //           color: Get.theme.primaryColor,
-                                //         ),
-                                //       ),
-                                //       // const Text('/'),
-                                //       const Text(
-                                //         '%',
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
                                 SizedBox(
                                   width: Get.width / 4,
                                   child: Text(
@@ -72,14 +54,14 @@ class NoteModeStudentPage extends StatelessWidget {
                                   .toString(),
                             ),
                             trailing: Text(
-                              controller.studentSubjectsList[index].teacherName
+                              controller.notesList[index].teacherName
                                   .toString(),
                             ),
                           ),
                         );
                       },
                     )
-                  : const Text('no_dates').tr(),
+                  : const Text('noNotes').tr(),
             );
           },
         ),

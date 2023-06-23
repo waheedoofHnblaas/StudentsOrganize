@@ -12,8 +12,64 @@ class StudentBayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AllStudentsBayController allStudentsBayController =
         Get.put(AllStudentsBayController());
+    StudentDataController controller = Get.find();
+    bayDoneWidget() {
+      return controller.sum >=
+              double.parse(
+                controller.bayModelList.first.studentBay.toString(),
+              )
+          ? const Text(
+              'bayDone',
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 33,
+              ),
+            ).tr()
+          : Text(
+              '${tr('remain')}  :  ${double.parse(
+                    controller.bayModelList.first.studentBay.toString(),
+                  ) - controller.sum}',
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 22,
+              ),
+            );
+    }
+
+    sumWidget() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '${tr('sum')}  :  ${controller.sum.toStringAsFixed(0)} / ${controller.bayModelList.first.studentBay}',
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      );
+    }
+
+    bayDataWidgetList() {
+      return ListView.builder(
+        itemCount: controller.bayModelList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+              controller.bayModelList[index].quantity
+                  .toString(),
+            ),
+            trailing: Text(
+              controller.bayModelList[index].bayDate
+                  .toString(),
+            ),
+          );
+        },
+      );
+    }
     return Scaffold(
-      floatingActionButton:  FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           allStudentsBayController.addStudentBay(context);
           print(allStudentsBayController.studentId.toString());
@@ -30,34 +86,12 @@ class StudentBayPage extends StatelessWidget {
                   ? Column(
                       children: [
                         Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '${tr('sum')}  :  ${controller.sum.toString()}',
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                          child: sumWidget(),
                         ),
+                        bayDoneWidget(),
                         Expanded(
                           flex: 10,
-                          child: ListView.builder(
-                            itemCount: controller.bayModelList.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(controller
-                                    .bayModelList[index].quantity
-                                    .toString()),
-                                trailing: Text(controller
-                                    .bayModelList[index].bayDate
-                                    .toString()),
-                              );
-                            },
-                          ),
+                          child: bayDataWidgetList(),
                         ),
                       ],
                     )
@@ -68,4 +102,5 @@ class StudentBayPage extends StatelessWidget {
       ),
     );
   }
+
 }

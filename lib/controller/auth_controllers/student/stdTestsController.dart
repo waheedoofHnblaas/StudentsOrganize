@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart';
 import 'package:students/controller/auth_controllers/student/friendsController.dart';
 import 'package:students/core/constant/approutes.dart';
+import 'package:students/core/constant/peroidTime.dart';
 import 'package:students/data/model/studentSubjectModel.dart';
 
 import '../../../core/class/statusrequest.dart';
@@ -17,15 +18,100 @@ class StdTestsComeController extends GetxController {
 
   late String studentModelId;
 
-  List<StudentSubjectModel> studentSubjectsList = [];
+  List<StudentSubjectModel> studentALLSubjectsList = [];
   List<bool> comeList = [];
+  int comeCount = 0;
   List<StudentSubjectModel> notesList = [];
   List<StudentSubjectModel> testsList = [];
   List<String> testsSubjectsNameList = [];
   String sort = '';
-
   double subjectAvg = 0;
   int subjectCount = 0;
+  String periodTime = '';
+
+  @override
+  void onInit() {
+    periodTime = periodTimeList.first;
+    super.onInit();
+  }
+
+  getComeList() {
+    comeList.clear();
+    comeCount = 0;
+    for (StudentSubjectModel stdSubject in studentALLSubjectsList) {
+      comeList.add(
+        stdSubject.studentLessonIsCome.toString() == '1' ? true : false,
+      );
+      if (stdSubject.studentLessonIsCome.toString() == '0') {
+        if (periodTime == periodTimeList.first) {
+          comeCount++;
+        } else if (periodTime == periodTimeList.last) {
+          if (DateTime.now()
+                  .difference(DateTime.parse(stdSubject.stdLesDate.toString()))
+                  .inDays <=
+              7) {
+            comeCount++;
+          }
+        } else {
+          if (DateTime.now()
+                  .difference(DateTime.parse(stdSubject.stdLesDate.toString()))
+                  .inDays <=
+              31) {
+            comeCount++;
+          }
+        }
+      }
+    }
+    update();
+  }
+
+  getStudentSubjects(String stdId) async {
+    studentModelId = stdId;
+    statusRequest = StatusRequest.loading;
+    update();
+    studentALLSubjectsList.clear();
+    testsList.clear();
+    notesList.clear();
+    try {
+      var response =
+          await studentData.getStudentSubjects(studentId: studentModelId);
+      statusRequest = handlingData(response);
+      print(response);
+      if (statusRequest == StatusRequest.success) {
+        if (response['status'] == 'success') {
+          List list = response['data'];
+          for (var element in list) {
+            print(element);
+            print('\n');
+            studentALLSubjectsList.add(StudentSubjectModel.fromJson(element));
+
+            if (studentALLSubjectsList.last.test.toString() != '') {
+              testsList.add(StudentSubjectModel.fromJson(element));
+            }
+            if (studentALLSubjectsList.last.studentLessonNote.toString() !=
+                '') {
+              notesList.add(StudentSubjectModel.fromJson(element));
+            }
+          }
+          await getTestsNameSubjectsList();
+          await getComeList();
+        }
+      } else {
+        Get.snackbar(tr('connectionError'), "");
+      }
+    } catch (e) {
+      print('getStudentSubjects catch $e');
+    }
+
+    statusRequest = StatusRequest.success;
+    update();
+  }
+
+  void setPeriodTime(String period) {
+    periodTime = period;
+    getComeList();
+    Get.back();
+  }
 
   void setSort(String string) {
     if (sort == string) {
@@ -48,7 +134,8 @@ class StdTestsComeController extends GetxController {
   }
 
   getTestsNameSubjectsList() async {
-    for (var element in studentSubjectsList) {
+    testsSubjectsNameList.clear();
+    for (var element in studentALLSubjectsList) {
       if (!testsSubjectsNameList.contains(element.subjectName)) {
         testsSubjectsNameList.add(element.subjectName.toString());
       }
@@ -56,52 +143,7 @@ class StdTestsComeController extends GetxController {
     update();
   }
 
-  getStudentSubjects(String stdId) async {
-    studentModelId = stdId;
-    statusRequest = StatusRequest.loading;
-    update();
-    studentSubjectsList.clear();
-    testsList.clear();
-    notesList.clear();
-    comeList.clear();
-    try {
-      var response =
-          await studentData.getStudentSubjects(studentId: studentModelId);
-      statusRequest = handlingData(response);
-      print(response);
-      if (statusRequest == StatusRequest.success) {
-        if (response['status'] == 'success') {
-          List list = response['data'];
-          for (var element in list) {
-            print(element);
-            print('\n');
-            studentSubjectsList.add(StudentSubjectModel.fromJson(element));
-            comeList.add(
-              studentSubjectsList.last.studentLessonIsCome.toString() == '1'
-                  ? true
-                  : false,
-            );
-            if (studentSubjectsList.last.test.toString() != '') {
-              testsList.add(StudentSubjectModel.fromJson(element));
-            }
-            if (studentSubjectsList.last.studentLessonNote.toString() != '') {
-              notesList.add(StudentSubjectModel.fromJson(element));
-            }
-          }
-          await getTestsNameSubjectsList();
-        }
-      } else {
-        Get.snackbar(tr('connectionError'), "");
-      }
-    } catch (e) {
-      print('getStudentSubjects catch $e');
-    }
-
-    statusRequest = StatusRequest.success;
-    update();
-  }
-
-  void toFreindsTestsPage(int index) async {
+  void toFriendsTestsPage(int index) async {
     Get.toNamed(AppRoute.friendsTestsPage);
     FriendsController friendsController = Get.put(FriendsController());
     await friendsController.getFriendsTests(testsList[index]);

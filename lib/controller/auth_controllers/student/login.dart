@@ -18,7 +18,6 @@ class StudentLoginController extends GetxController {
   MyServices myServices = Get.find();
   StudentModel studentModel = StudentModel();
 
-
   changeShow() {
     showText = !showText;
     update();
@@ -36,25 +35,24 @@ class StudentLoginController extends GetxController {
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == 'success') {
           studentModel = StudentModel.fromJson(response['data']);
-
-          studentModel.studentPassword=password.text;
+          studentModel.studentPassword = password.text;
           String jsonString = jsonEncode(studentModel.toJson());
           await myServices.sharedPreferences
               .setString('studentModel', jsonString);
           myServices.sharedPreferences.setString('step', '2');
-                    myServices.sharedPreferences.setString('step', '2');
+          myServices.sharedPreferences.setString('step', '2');
+          statusRequest = StatusRequest.success;
           update();
           Get.offAllNamed(AppRoute.studentDashboard);
         } else {
-          Get.snackbar(tr('LoginError'), tr('PasswordError'));
+          Get.snackbar(tr('loginError'), tr('PasswordError'));
           statusRequest = StatusRequest.failure;
-          if(hasData) {
+          if (hasData) {
             Get.offNamed(AppRoute.userTypePage);
           }
-
         }
-      }else{
-        Get.snackbar(tr('LoginError'), tr('PasswordError'));
+      } else {
+        Get.snackbar(tr('connectionError'), '');
       }
       update();
       print('validate');
@@ -76,6 +74,5 @@ class StudentLoginController extends GetxController {
 
     // validInput(password.text, 8, 50, 'password');
     await loginStudent(true);
-
   }
 }

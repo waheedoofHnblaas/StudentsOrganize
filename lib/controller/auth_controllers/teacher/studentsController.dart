@@ -25,6 +25,7 @@ class StudentsController extends GetxController {
   TextEditingController typeTextController = TextEditingController();
   TextEditingController pornDateTextController = TextEditingController();
   TextEditingController searchController = TextEditingController();
+  TextEditingController bayController = TextEditingController();
 
 
   disposeTexts() {
@@ -35,13 +36,8 @@ class StudentsController extends GetxController {
     parentPhoneTextController = TextEditingController();
     typeTextController = TextEditingController();
     pornDateTextController = TextEditingController(text: '2000');
+    bayController = TextEditingController();
     update();
-  }
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
   }
 
   getStudents() async {
@@ -140,6 +136,7 @@ class StudentsController extends GetxController {
           studentParentPhone: parentPhoneTextController.text,
           studentBornDate: pornDateTextController.text,
           studentType: typeTextController.text,
+          studentBay: bayController.text,
         );
         statusRequest = handlingData(response);
         if (statusRequest == StatusRequest.success) {

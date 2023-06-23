@@ -8,17 +8,19 @@ class StudentModel {
   String? studentParentPhone;
   String? studentBornDate;
   String? studentType;
+  String? studentBay;
 
   StudentModel(
       {this.studentId,
-        this.studentName,
-        this.studentPassword,
-        this.studentCreate,
-        this.studentPhone,
-        this.studentParentName,
-        this.studentParentPhone,
-        this.studentBornDate,
-        this.studentType});
+      this.studentName,
+      this.studentPassword,
+      this.studentCreate,
+      this.studentPhone,
+      this.studentParentName,
+      this.studentParentPhone,
+      this.studentBornDate,
+      this.studentType,
+      this.studentBay});
 
   StudentModel.fromJson(Map<String, dynamic> json) {
     studentId = json['student_id'];
@@ -30,6 +32,7 @@ class StudentModel {
     studentParentPhone = json['student_parent_phone'];
     studentBornDate = json['student_born_date'];
     studentType = json['student_type'];
+    studentBay = json['student_bay'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +46,7 @@ class StudentModel {
     data['student_parent_phone'] = studentParentPhone;
     data['student_born_date'] = studentBornDate;
     data['student_type'] = studentType;
+    data['student_bay'] = studentBay;
     return data;
   }
 }

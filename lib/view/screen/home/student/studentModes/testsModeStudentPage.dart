@@ -16,10 +16,10 @@ class TestsModeStudentPage extends StatelessWidget {
       return InkWell(
         onTap: () {
           print(controller.testsList[index].subjectName);
-          controller.toFreindsTestsPage(index);
+          controller.toFriendsTestsPage(index);
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,6 +44,21 @@ class TestsModeStudentPage extends StatelessWidget {
                   Text(
                     controller.testsList[index].lessonTime.toString(),
                     style: const TextStyle(fontSize: 9),
+                  ),
+                  SizedBox(
+                    width: Get.width / 4,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      controller.toFriendsTestsPage(index);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: const Text(
+                        'exam_friends',
+                        style: TextStyle(fontSize: 8, color: Colors.blue),
+                      ).tr(),
+                    ),
                   ),
                 ],
               ),
@@ -85,9 +100,13 @@ class TestsModeStudentPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        controller.testsList[index].test.toString(),
+                        double.parse(
+                          controller.testsList[index].test.toString(),
+                        ).toStringAsFixed(0),
                         style: TextStyle(
-                            color: Get.theme.primaryColor, fontSize: 18),
+                          color: Get.theme.primaryColor,
+                          fontSize: 18,
+                        ),
                       ),
                       const Text('/'),
                       Text(
@@ -104,6 +123,70 @@ class TestsModeStudentPage extends StatelessWidget {
       );
     }
 
+    subjectsListWidget() {
+      return Container(
+        color: Get.theme.scaffoldBackgroundColor,
+        height: Get.height / 12,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: controller.testsSubjectsNameList.length,
+          itemBuilder: (context, index) => InkWell(
+            onTap: () {
+              controller.setSort(controller.testsSubjectsNameList[index]);
+              print(controller.sort);
+            },
+            child: Card(
+              shape: OutlineInputBorder(
+                borderSide: BorderSide(color: Get.theme.primaryColor),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(12),
+                ),
+              ),
+              color: controller.sort == controller.testsSubjectsNameList[index]
+                  ? Get.theme.primaryColor.withOpacity(0.5)
+                  : Get.theme.scaffoldBackgroundColor,
+              child: Padding(
+                padding: EdgeInsets.all(Get.width / 33),
+                child: Center(
+                  child: Text(
+                    controller.testsSubjectsNameList[index],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    animationAvgWidget() {
+      return AnimatedContainer(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        duration: const Duration(
+          milliseconds: 200,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+          color: Get.theme.primaryColor.withOpacity(0.3),
+        ),
+        height: controller.sort == '' ? 0 : Get.height / 14,
+        width: controller.sort == '' ? 0 : Get.width / 1.5,
+        child: Center(
+          child: Text(
+            controller.subjectCount != 0
+                ? '${tr('avg')} : ${controller.subjectAvg.toStringAsFixed(1)}'
+                : 'noExams',
+            style: const TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight.bold,
+            ),
+          ).tr(),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('subjects').tr(),
@@ -116,53 +199,8 @@ class TestsModeStudentPage extends StatelessWidget {
               widget: controller.testsList.isNotEmpty
                   ? Column(
                       children: [
-                        SizedBox(
-                          height: Get.height / 11,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.testsSubjectsNameList.length,
-                            itemBuilder: (context, index) => InkWell(
-                              onTap: () {
-                                controller.setSort(
-                                    controller.testsSubjectsNameList[index]);
-                                print(controller.sort);
-                              },
-                              child: Card(
-                                color: controller.sort ==
-                                        controller.testsSubjectsNameList[index]
-                                    ? Get.theme.primaryColor.withOpacity(0.5)
-                                    : Get.theme.scaffoldBackgroundColor,
-                                child: Padding(
-                                  padding: EdgeInsets.all(Get.width / 33),
-                                  child: Center(
-                                    child: Text(
-                                      controller.testsSubjectsNameList[index],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        AnimatedContainer(
-                          duration: const Duration(seconds: 1),
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                              color: Get.theme.primaryColor.withOpacity(0.3)),
-                          height: controller.sort == '' ? 0 : Get.height / 14,
-                          width: controller.sort == '' ? 0 : Get.width / 1.5,
-                          child: Center(
-                            child: Text(
-                              '${tr('avg')} : ${controller.subjectAvg}',
-                              style: const TextStyle(
-                                fontSize: 21,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
+                        subjectsListWidget(),
+                        animationAvgWidget(),
                         Expanded(
                           child: ListView.builder(
                             itemCount: controller.testsList.length,
@@ -182,7 +220,7 @@ class TestsModeStudentPage extends StatelessWidget {
                         ),
                       ],
                     )
-                  : const Text('no_dates').tr(),
+                  : const Text('noExams').tr(),
             );
           },
         ),
